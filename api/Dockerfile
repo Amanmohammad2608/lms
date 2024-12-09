@@ -1,12 +1,8 @@
-FROM node:16
-RUN mkdir /lmsfe
-WORKDIR /lmsfe
-COPY ..
+FROM node:16 AS builder
+RUN mkdir /frontend
+WORKDIR /frontend
+COPY . /frontend
 RUN npm install
-RUN npx prisma generate
-RUN npx prisma db push
 RUN npm run build
-EXPOSE 8080
-CMD ["npm", "start"]
-CMD ["node", "build/index.js"]
-
+FROM nginx
+COPY --from=builder /frontend/dist /usr/share/nginx/html
