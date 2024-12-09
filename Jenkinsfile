@@ -4,7 +4,7 @@ pipeline {
         stage('Sonar Analysis') {
             steps {
                 echo 'CODE QUALITY CHECK'
-                sh 'cd webapp && sudo docker run --rm -e SONAR_HOST_URL="http://52.11.92.224:9000" -v ".:/usr/src" -e SONAR_TOKEN="sqp_683194bc8b08654f00afc1f741cbba7e74a49ede" sonarsource/sonar-scanner-cli -Dsonar.projectKey=lms'
+                sh 'cd webapp && sudo docker run --rm -e SONAR_HOST_URL="54.160.176.39:9000" -v ".:/usr/src" -e SONAR_TOKEN="sqp_a25d853cc9bf31003c4e7cf6255c79155f4c54c3" sonarsource/sonar-scanner-cli -Dsonar.projectKey=lms'
                 echo 'CODE QUALITY COMPLETED' 
             }
         }
@@ -22,8 +22,8 @@ pipeline {
                     def packageJson = readJSON file: 'webapp/package.json'
                     def packageJSONVersion = packageJson.version
                     echo "${packageJSONVersion}"
-                    sh "zip webapp/lms-${packageJSONVersion}.zip -r webapp/dist"
-                    sh "curl -v -u admin:lms12345 --upload-file webapp/lms-${packageJSONVersion}.zip http://52.11.92.224:8081/repository/lms/"
+                    sh "zip webapp/lmns-${packageJSONVersion}.zip -r webapp/dist"
+                    sh "curl -v -u admin:134113114 --upload-file webapp/lmns-${packageJSONVersion}.zip http://54.160.176.39:8081/repository/lms/"
                 }
             }
         }
@@ -33,9 +33,9 @@ pipeline {
                 script {
                     def packageJson = readJSON file: 'webapp/package.json'
                     def packageJSONVersion = packageJson.version
-                    sh "curl -u admin:lms12345 -X GET \'http://52.11.92.224:8081/repository/lms/lms-${packageJSONVersion}.zip\' --output lms-'${packageJSONVersion}'.zip"
+                    sh "curl -u admin:134113114 -X GET \'http://54.160.176.39:8081/repository/lms/lmns-${packageJSONVersion}.zip\' --output lmns-'${packageJSONVersion}'.zip"
                     sh 'sudo rm -rf /var/www/html/*'
-                    sh "sudo unzip -o lms-'${packageJSONVersion}'.zip"
+                    sh "sudo unzip -o lmns-'${packageJSONVersion}'.zip"
                     sh "sudo cp -r webapp/dist/* /var/www/html"
                 }
             }
