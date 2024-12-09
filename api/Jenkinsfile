@@ -8,7 +8,7 @@ pipeline {
                     def packageJSONVersion = packageJson.version
                     echo "${packageJSONVersion}"
                     echo 'building image'
-                    sh "docker build -t amanmohammad2608/lmsfront:${packageJSONVersion}"
+                    sh "docker build -t amanmohammad2608/lmsfront:${packageJSONVersion} ."
                     echo 'image build done' 
             }
         }
