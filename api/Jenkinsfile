@@ -18,14 +18,6 @@ pipeline {
                 }
             }
         }
-        stage('check directory structure') {
-            steps {
-                script {
-                    echo 'Listing directories'
-                    sg 'ls -R'
-                }
-            }
-        }
         stage('image build') {
             steps {
                 script {
