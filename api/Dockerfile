@@ -5,4 +5,4 @@ COPY . /frontend
 RUN npm install
 RUN npm run build
 FROM nginx
-COPY --from=builder /frontend/dist /usr/share/nginx/html
+COPY --from=builder /frontend/build /usr/share/nginx/html

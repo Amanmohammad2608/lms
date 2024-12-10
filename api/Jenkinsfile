@@ -1,17 +1,40 @@
 pipeline {
     agent any
     stages {
-        stage('image build') {
+        stage('pulling code') {
+            steps {
+                script {
+                    echo 'pulling code from repository'
+                    checkout scm
+                }
+            }
+        }
+        stage('reading version from package.json') {
             steps {
                 script {
                     def packageJson = readJSON file: 'api/package.json'
-                    def packageJSONVersion = packageJson.version
-                    echo "${packageJSONVersion}"
-                    echo 'building image'
-                    sh "docker build -t amanmohammad2608/lmsfront:${packageJSONVersion} ."
-                    echo 'image build done' 
+                    env.packageJSONVersion = packageJson.version
+                    echo "${env.packageJSONVersion}"
+                }
             }
         }
+        stage('image build') {
+            steps {
+                script {
+                    echo 'building image'
+                    sh "docker build -t amanmohammad2608/lmsfront:${env.packageJSONVersion} ."
+                    echo 'image build done'
+            }
+        }
+        }
+        stage('pushing image') {
+            steps {
+                script {
+                    sh "docker login -u ${amanmohammad2608} -p ${134113114Aman#}"
+                    sh "docker push amanmohammad2608/lmsfront:${env.packageJSONVersion}"
+                    echo 'pushing the image completed'
+                }
+            }
         }
     }
 }
