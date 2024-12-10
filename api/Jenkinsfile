@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     echo 'building image'
-                    sh "docker build -t amanmohammad2608/lmsfront:${env.packageJSONVersion} /api/Dockerfile/."
+                    sh "docker build -t amanmohammad2608/lmsfront:${env.packageJSONVersion} -f /api/Dockerfile api/"
                     echo 'image build done'
             }
         }
