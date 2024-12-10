@@ -30,7 +30,7 @@ pipeline {
         stage('pushing image') {
             steps {
                 script {
-                    sh "docker login -u ${amanmohammad2608} -p ${134113114Aman#}"
+                    sh "docker login -u ${amanmohammad2608} -p ${134113114Aman}"
                     sh "docker push amanmohammad2608/lmsfront:${env.packageJSONVersion}"
                     echo 'pushing the image completed'
                 }
