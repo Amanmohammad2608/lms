@@ -18,11 +18,19 @@ pipeline {
                 }
             }
         }
+        stage('check directory structure') {
+            steps {
+                script {
+                    echo 'Listing directories'
+                    sg 'ls -R'
+                }
+            }
+        }
         stage('image build') {
             steps {
                 script {
                     echo 'building image'
-                    sh "docker build -f k8s/api/Dockerfile -t amanmohammad2608/lmsfront:${env.packageJSONVersion} ."
+                    sh "docker build -t amanmohammad2608/lmsfront:${env.packageJSONVersion} ."
                     echo 'image build done'
             }
         }
